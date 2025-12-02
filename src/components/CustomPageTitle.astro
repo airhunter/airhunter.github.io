@@ -1,0 +1,60 @@
+---
+import Default from '@astrojs/starlight/components/PageTitle.astro';
+import { Badge } from '@astrojs/starlight/components';
+
+// 从 Starlight 提供的本地路由信息中读取当前页面的 frontmatter
+const route = (Astro.locals as any)?.starlightRoute;
+const entry = route?.entry;
+const data = (entry?.data ?? {}) as { date?: string | Date; tags?: string[] };
+
+// 格式化日期
+const formattedDate = data.date
+  ? new Date(data.date).toLocaleDateString('zh-CN', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  : null;
+
+const tags = data.tags ?? [];
+---
+
+<Default {...Astro.props}>
+  <slot />
+</Default>
+
+<div class="metadata">
+  {formattedDate && (
+    <div class="date">
+      <span>📅 {formattedDate}</span>
+    </div>
+  )}
+  
+  {tags.length > 0 && (
+    <div class="tags">
+      {tags.map((tag: string) => (
+         <Badge text={tag} variant="note" size="small" />
+      ))}
+    </div>
+  )}
+</div>
+
+<style>
+  .metadata {
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    color: var(--sl-color-gray-3);
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--sl-color-hairline);
+    padding-bottom: 1rem;
+  }
+  
+  .tags {
+    display: flex;
+    gap: 0.5rem;
+  }
+</style>

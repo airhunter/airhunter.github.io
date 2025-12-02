@@ -9,6 +9,9 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Under Southern Skies',
+			components: {
+				PageTitle: './src/components/CustomPageTitle.astro',
+			},
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/airhunter/' }],
 			sidebar: [
 				{
