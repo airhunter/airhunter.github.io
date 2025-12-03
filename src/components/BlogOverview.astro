@@ -1,0 +1,109 @@
+---
+import { getCollection } from 'astro:content';
+
+// 读取 docs 集合中所有带日期的文章（排除首页等特殊页面）
+const allPosts = await getCollection('docs', ({ id, data }) => {
+  if (!data.date) return false;
+  if (id === 'index') return false;
+  return true;
+});
+
+// 按日期倒序排列
+const sortedPosts = [...allPosts].sort((a, b) => {
+  const da = new Date(a.data.date as any).getTime();
+  const db = new Date(b.data.date as any).getTime();
+  return db - da;
+});
+
+const latestPosts = sortedPosts.slice(0, 5);
+
+// 统计标签
+const tagSet = new Set<string>();
+for (const post of sortedPosts) {
+  const tags = (post.data as any).tags as string[] | undefined;
+  tags?.forEach((t) => tagSet.add(t));
+}
+
+const totalPosts = sortedPosts.length;
+const totalTags = tagSet.size;
+---
+
+<section class="overview">
+
+  <div class="latest">
+    <h2>最新文章</h2>
+    {latestPosts.length === 0 ? (
+      <p>暂时还没有文章。</p>
+    ) : (
+      <ul>
+        {latestPosts.map((post) => (
+          <li>
+            <a href={`/${post.id}/`}>{post.data.title as string}</a>
+            {post.data.date && (
+              <span class="date">
+                {new Date(post.data.date as any).toLocaleDateString('zh-CN')}
+              </span>
+            )}
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+    <p class="summary">共 {totalPosts} 篇文章 · {totalTags} 个标签</p>
+</section>
+
+<style>
+  .overview {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .summary {
+    font-size: 0.9rem;
+    color: var(--sl-color-gray-3);
+  }
+
+  .latest h2 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .latest ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .latest li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .latest a {
+    text-decoration: none;
+    color: var(--sl-color-text-accent);
+  }
+
+  .latest a:hover {
+    text-decoration: underline;
+  }
+
+  .date {
+    font-size: 0.85rem;
+    color: var(--sl-color-gray-3);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 640px) {
+    .latest li {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
