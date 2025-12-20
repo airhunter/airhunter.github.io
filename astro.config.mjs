@@ -19,11 +19,11 @@ export default defineConfig({
 					autogenerate: { directory: 'tech' },
 				},
 				{
-					label: 'Reference',
-					autogenerate: { directory: 'reference' },
+					label: '杂谈',
+					autogenerate: { directory: 'essay' },
 				},
 				{
-					label: 'Archive',
+					label: '日记',
 					collapsed: true,
 					items: [
 						{ label: '2025', collapsed: true, autogenerate: { directory: 'archive/2025' } },
