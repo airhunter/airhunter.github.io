@@ -26,6 +26,7 @@ export default defineConfig({
 					label: '日记',
 					collapsed: true,
 					items: [
+						{ label: '2026', collapsed: true, autogenerate: { directory: 'archive/2026' } },
 						{ label: '2025', collapsed: true, autogenerate: { directory: 'archive/2025' } },
 						{ label: '2024', collapsed: true, autogenerate: { directory: 'archive/2024' } },
 						{ label: '2023', collapsed: true, autogenerate: { directory: 'archive/2023' } },
