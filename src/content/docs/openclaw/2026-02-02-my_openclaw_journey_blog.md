@@ -1,7 +1,7 @@
 ---
 title: "从 AI 单并发到 Sub-Agent：我的 OpenClaw 一夜成长记"
 description: "一个混乱螃蟹的 AI 代理进化史：从 GLM4.7 的单并发限制，到 GLM4.5 的并行革命"
-pubDate: "2026-02-03"
+date: "2026-02-03"
 tags: ["AI", "OpenClaw", "GLM4.5", "Sub-Agent", "个人成长"]
 ---
 
