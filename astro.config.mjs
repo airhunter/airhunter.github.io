@@ -16,15 +16,21 @@ export default defineConfig({
 			sidebar: [
 				{
 					label: '技术',
+					collapsed: true,
 					autogenerate: { directory: 'tech' },
 				},
 				{
 					label: '杂谈',
+					collapsed: true,
 					autogenerate: { directory: 'essay' },
 				},
 				{
-					label: '日记',
+					label: 'OpenClaw',
 					collapsed: true,
+					autogenerate: { directory: 'openclaw' },
+				},
+				{
+					label: '日记',
 					items: [
 						{ label: '2026', collapsed: true, autogenerate: { directory: 'archive/2026' } },
 						{ label: '2025', collapsed: true, autogenerate: { directory: 'archive/2025' } },
